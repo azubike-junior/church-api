@@ -1,0 +1,24 @@
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"bad request error","error":[{"value":"seadgmail.com","msg":"Invalid value","param":"email","location":"body"},{"value":"seadgmail.com","msg":"email cannot be empty","param":"email","location":"body"}],"service":"church-api"}
+{"level":"error","message":"bad request error","error":[{"value":"sead@gmail.com","msg":"email cannot be empty","param":"email","location":"body"},{"value":"12","msg":"password require more than 3 chars","param":"password","location":"body"}],"service":"church-api"}
+{"level":"error","message":"bad request error","error":[{"value":"zubi@gmail.com","msg":"email cannot be empty","param":"email","location":"body"},{"value":"12","msg":"password require more than 3 chars","param":"password","location":"body"}],"service":"church-api"}
+{"level":"error","message":"bad request error","error":[{"value":"zubi@gmail.com","msg":"email cannot be empty","param":"email","location":"body"}],"service":"church-api"}
+{"level":"error","message":"bad request error","error":[{"value":"zubi@gmail.com","msg":"email cannot be empty","param":"email","location":"body"}],"service":"church-api"}
+{"level":"error","message":"bad request error","error":[{"value":"zubi@gmail.com","msg":"email cannot be empty","param":"email","location":"body"}],"service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"invalid credentials","service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"invalid id","service":"church-api"}
+{"level":"error","message":"invalid id","service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"bad request error","error":[{"msg":"name require more than 3 chars","param":"name","location":"body"}],"service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
