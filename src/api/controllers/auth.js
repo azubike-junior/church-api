@@ -26,7 +26,7 @@ export const RegisterUser = () =>
         if (!userUnit) {
              return badRequest(res, {message: 'unit doesnt exist'});
         }
-        const newUser = await createUser({ name, email, first_timer, worker, unit })
+        const newUser = await createUser({ name, email, first_timer, worker, unit, created_at: new Date() })
         await userUnit.increment('numberOfPeople')
         const user_id = newUser.get('user_id');
        

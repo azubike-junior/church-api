@@ -12,9 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       content: {
         type: DataTypes.STRING
       },
-      created_at: {
-        type: DataTypes.DATE
-      },
+      created_at: DataTypes.DATE,
       description: {
         type: DataTypes.STRING
       },
@@ -26,15 +24,15 @@ module.exports = (sequelize, DataTypes) => {
       },
     }
     
-    const post = sequelize.define('Post', postSchema, {},)
+    const post = sequelize.define('Post', postSchema, {timestamps: false},)
 
     post.associate = db => {
       post.hasMany(db.Comment, {
          foreignKey: 'post_id'
       })
       post.belongsTo(db.User, {
-        foreignKey: 'user_id',
-        sourceKey:'author_id'
+        foreignKey: 'author_id',
+        sourceKey:'user_id'
       })
     }
   

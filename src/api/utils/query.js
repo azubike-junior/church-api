@@ -49,46 +49,60 @@ export const getAllWorkersInUnit = async (id, {page, limit}) => {
 }
 
 // Posts Queries
-export const createPost = async (content, description, author_id) => {
-    return await Post.create({content, description, author_id})
+export const createAPost = async (post) => {
+    return await Post.create(post)
 }
 
 export const findPostById = async (id) => {
-    return await Post.findOne({where: {post_id:id}})
-}
-
-export const getAllPosts = async () => {
-    return await Post.findAll()
-}
-
-export const getPostByAuthor = async (id) => {
-    return await Post.findAll({where: {author_id: id}})
-}
-
-export const getCommentsOfPost = async (id) => {
     return await Post.findOne({
         where: { post_id: id },
         include: {
-            model: Comment, 
+            model: Comment,
             attributes: ['content', 'reviewer_id']
-    }})
-}
+        }
+    })
+};
+
+export const getAllPosts = async (page, limit) => {
+    return await Post.findAll({
+        include: {
+            model: Comment,
+            attributes: ['content', 'reviewer_id']
+        }
+    }, ...paginate(page, limit))
+};
+
+export const getAllPostByAuthor = async (id, { page, limit }) => {
+    return await Post.findAll({
+        where: { author_id: id },
+        include: {
+            model: Comment,
+            attributes: ['content', 'reviewer_id']
+        }
+    },
+        ...paginate({page, limit}))
+};
+
 
 export const deletePostById = async (id) => {
-    return await Post.destroy({where: {post_id: id}})
-}
+    return await Post.destroy({ where: { post_id: id } })
+};
 
 //Comments Queries 
-export const createComment = async (content, post_id, reviewer_id) => {
-    return await Comment.create({content, post_id, reviewer_id})
+export const createAComment = async (comment) => {
+    return await Comment.create(comment)
 }
 
-export const getPostComments = async (id) => {
-    return await Comment.findAll({where : {post_id: id}})
+export const getPostComments = async(id, { page, limit }) => {
+    return await Comment.findAll({ where: { post_id: id } }, ...paginate(page, limit))
 }
 
-export const deleteCommentById = async (id) => {
+export const deleteCommentById = async (id, ) => {
     return await Comment.destroy({where: {comment_id: id}})
+}
+
+export const findCommentById = async (id, ) => {
+    return await Comment.findOne({where: {comment_id: id}})
 }
 
 // Unit Queries

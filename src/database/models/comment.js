@@ -16,14 +16,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE
       },
       post_id: {
-        type: DataTypes.STRING
+        type: DataTypes.UUID
       },
       reviewer_id: {
         type: DataTypes.STRING
       },
     }
     
-    const comment = sequelize.define('Comment', commentSchema, {},)
+    const comment = sequelize.define('Comment', commentSchema, {timestamps: false},)
 
     comment.associate = db => {
       comment.belongsTo(db.Post, {
@@ -31,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey:'post_id'
       })
       comment.belongsTo(db.User, {
-        foreignKey: 'user_id',
-        sourceKey:'reviewer_id'
+        foreignKey: 'reviewer_id',
+        sourceKey:'user_id'
       })
     }
 

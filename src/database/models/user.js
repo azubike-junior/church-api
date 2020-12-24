@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
              defaultValue: 'member'
         },
         created_at: {
-            type: DataTypes.DATEONLY
+            type: DataTypes.DATE
         },
         unit: {
             type: DataTypes.INTEGER,

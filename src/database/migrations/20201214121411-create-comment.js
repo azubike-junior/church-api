@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       post_id: {
-        type: Sequelize.STRING
+        type: Sequelize.UUID
       },
       reviewer_id: {
         type: Sequelize.STRING
