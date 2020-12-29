@@ -24,3 +24,10 @@
 {"level":"error","message":"Email is not available","service":"church-api"}
 {"level":"error","message":"bad request error","error":[{"msg":"invalid UUID","param":"author_id","location":"body"}],"service":"church-api"}
 {"level":"error","message":"bad request error","error":[{"msg":"content require more than 5 chars","param":"content","location":"body"},{"msg":"description require more than 2 chars","param":"description","location":"body"}],"service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"bad request error","error":[{"value":"hh","msg":"password require more than 3 chars","param":"password","location":"body"}],"service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"Email is not available","service":"church-api"}
+{"level":"error","message":"bad request error","error":[{"msg":"Invalid value","param":"unit_id","location":"body"}],"service":"church-api"}
+{"level":"error","message":"bad request error","error":[{"value":2,"msg":"unit_id must be an integer","param":"unit_id","location":"body"}],"service":"church-api"}
+{"level":"error","message":"bad request error","error":[{"value":2,"msg":"unit_id must be an integer","param":"unit_id","location":"body"}],"service":"church-api"}

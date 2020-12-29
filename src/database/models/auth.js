@@ -1,5 +1,7 @@
 'use strict';
-import {hashPassword, comparePassword} from '../../api/utils/password'
+import { decryptToken, getTimeDifference } from '../../api/utils/crypto';
+import { hashPassword, comparePassword } from '../../api/utils/password'
+import config from '../../config/config'
 
 module.exports = (sequelize, DataTypes) => {
   const authSchema = {
@@ -38,6 +40,14 @@ module.exports = (sequelize, DataTypes) => {
   auth.prototype.comparePassword = function (password) {
     return comparePassword(password, this.password)
   }
+
+  auth.prototype.resetPassword = async function (token, password) {
+        if (getTimeDifference(decryptToken(token)) > Number(config.tokenExpiry)) {
+            throw new Error("The Link has expired");
+        }
+        this.password = hashPassword(password);
+        this.save();
+    };
 
   return auth;
 };

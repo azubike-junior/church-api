@@ -15,3 +15,7 @@ export const tryHandler = (handler) => {
         }
     }
 }
+
+export const getBaseUrl = httpRequestOrResponseObj => {
+    return `${httpRequestOrResponseObj.protocol}://${httpRequestOrResponseObj.get('host')}`
+}

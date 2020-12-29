@@ -7,6 +7,8 @@ import {paginationOption, reqPaginationQuery} from "../utils/pagination"
 import {findUserById, getAllUsers, getAllWorkers, getAllFirstTimers, getAllHODs, getUnitById, getAllWorkersInUnit} from "../utils/query";
 import {userType} from "../utils/constant";
 import {validateInt} from "../utils/validation";
+import sendEmail from "../../email/email";
+import { assignedMemberToHODTemplate, assignedMemberToUnitTemplate } from "../../email/template";
 
 export const getWorkers = () => tryHandler(async(req, res) => {
   const {page, limit} = reqPaginationQuery(req);
@@ -97,8 +99,8 @@ export const updateMember = () =>
         return successResponse(res, 'update success')
      })
 
-export const assignMemberAsHOD = () => tryHandler(async(req, res) => {
-  const {user_id} = req.params
+export const assignMemberAsHOD = () => tryHandler(async (req, res) => {
+  const {params:{ user_id}, body: { unit_id } } = req
   if (!validate(user_id)) {
     return badRequest(res, 'invalid id')
   }
@@ -106,16 +108,26 @@ export const assignMemberAsHOD = () => tryHandler(async(req, res) => {
   if (!user) {
     return notFound(res, 'user not found')
   }
-  await user.assignHOD()
-  return noContent(res)
-})
+  if (validateInt(unit_id)) {
+    return badRequest(res, 'invalid id')
+  }
+  const unit = await getUnitById(unit_id);
 
-export const assignMemberToUnit = () => tryHandler(async(req, res) => {
-  const {params: {
-      user_id
-    }, body: {
-      unit_id
-    }} = req;
+  if (!unit) {
+    return notFound(res, 'no unit found with this id')
+  }
+  const url = 'https://google.com'
+  await user.assignHOD(unit_id)
+  await sendEmail(user.email, 'HOD Assignment', assignedMemberToHODTemplate(user, unit, url))
+  return noContent(res)
+});
+
+export const assignMemberToUnit = () => tryHandler(async (req, res) => {
+  const { params: {
+    user_id
+  }, body: {
+    unit_id
+  } } = req;
   if (!validate(user_id)) {
     return badRequest(res, 'invalid id')
   }
@@ -137,9 +149,12 @@ export const assignMemberToUnit = () => tryHandler(async(req, res) => {
   await user.assignUnit(unit_id)
   await unit.increment('numberOfPeople')
   await user.mutateWorker(true)
-   await user.mutateFirstTimer(false)
+  await user.mutateFirstTimer(false)
+
+  const url = 'https://google.com'
+  await sendEmail(user.email, 'Unit Assignment', assignedMemberToUnitTemplate(unit, user, url))
   return successResponse(res, 'member is assigned to a unit')
-})
+});
 
 export const mutateFirstTimerToMember = () => tryHandler(async(req, res) => {
   const {params: {

@@ -1,6 +1,24 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+     Promise.all([
+      queryInterface.addColumn(
+        'Users',
+        'resetToken',
+        {
+          type: Sequelize.STRING
+        }
+      ),
+      queryInterface.addColumn(
+        'Users',
+        'isVerified',
+        {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false
+        }
+      ),
+    ]);
+
     await queryInterface.createTable('Users', {
       user_id: {
         allowNull: false,
@@ -10,7 +28,7 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false
       },
       email: {
         type: Sequelize.STRING,

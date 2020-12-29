@@ -1,5 +1,8 @@
 'use strict';
-import { userType } from '../../api/utils/constant';
+import { emailSubject, passwordResetSubject, userType } from '../../api/utils/constant';
+import sendEmail from '../../email/email';
+import { emailVerificationTemplate, passwordResetTemplate } from '../../email/template';
+import { encryptToken } from '../../api/utils/crypto';
 
 module.exports = (sequelize, DataTypes) => {
     const userSchema = {
@@ -48,6 +51,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         bio: {
             type: DataTypes.STRING
+        },
+        isVerified: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        resetToken: {
+            type: DataTypes.STRING,
         }
     }
     
@@ -88,8 +98,9 @@ module.exports = (sequelize, DataTypes) => {
         return this;
     }
 
-    user.prototype.assignHOD = async function () {
+    user.prototype.assignHOD = async function (unit_id) {
         this.account_type = userType.HOD.toString();
+        this.unit = unit_id;
         await this.save();
         return this;
     }
@@ -104,7 +115,35 @@ module.exports = (sequelize, DataTypes) => {
         return this
     }
 
-    user.removeAttribute('unit_id')
-    
+    user.prototype.activateAccount = async function () {
+        this.isVerified = true;
+        await this.save();
+        return this;
+    }
+
+    user.prototype.sendVerificationEmail = async function (url) {
+        const { name, email } = this;
+        await sendEmail(email,emailSubject, emailVerificationTemplate(name, url))
+    }
+
+     user.prototype.generateResetToken = async function () {
+        this.resetToken = encryptToken()
+        await this.save();
+        return this.resetToken;
+    }
+
+    user.prototype.sendPasswordResetEmail = async function (url) {
+        const { name, email } = this;
+        const resetToken = await this.generateResetToken();
+        const resetUrl = `${url}/${resetToken}`
+        await sendEmail(email, passwordResetSubject, passwordResetTemplate(name, resetUrl))
+    }
+
+    user.prototype.setPasswordTokenNull = async function () {
+        this.resetToken = '';
+        this.save();
+        return this ;
+    };
+
   return user;
 };

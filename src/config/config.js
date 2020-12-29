@@ -6,7 +6,11 @@ const {
     DATABASE_URI,
     SECRET,
     DIALECT,
-    NODE_ENV
+    NODE_ENV,
+    REDIS_URI,
+    SENDGRID_KEY,
+    EMAIL,
+    TOKEN_EXPIRY
 } = process.env;
 
 module.exports = {
@@ -19,6 +23,10 @@ module.exports = {
     },
     appPort: PORT,
     secret: SECRET,
-    node_env: NODE_ENV
+    node_env: NODE_ENV,
+    redisUrl: REDIS_URI,
+    sgKey: SENDGRID_KEY,
+    fromEmail: EMAIL,
+    tokenExpiry: TOKEN_EXPIRY
 }
 

@@ -15,8 +15,20 @@ export const findUserByEmail = async (email) => {
     return await User.findOne({ where: { email } });
 }
 
+export const findUserIfVerified = async (email) => {
+    return await User.findOne({ where: { email, isVerified: true } });
+}
+
 export const findUserById = async (id) => {
     return await User.findOne({ where : {user_id: id}})
+}
+
+export const findUserByToken = async (token) => {
+    return await User.findOne({ where : {resetToken: token}})
+}
+
+export const findUserByPK = async (id) => {
+    return await User.findByPk(id)
 }
 
 export const getAllWorkers = async (page, limit) => {
@@ -118,7 +130,7 @@ export const getPeopleInUnit = async (id, name) => {
             attributes: ['user_id', 'name']
         }
     })
-} 
+};
 
 export const getAllUnits = async (page, limit) => {
     return await Unit.findAll({}, ...paginate(page, limit))

@@ -44,6 +44,21 @@ export const validateCreateComment = () => [
     validationResponse()
 ]
 
+export const validatePasswordResetReq = () => [
+    check('email').isEmail().withMessage('email cannot be empty'),
+    validationResponse()
+]
+
+export const validatePassword = () => [
+    checkString('password', 3),
+    validationResponse()
+]
+
+export const validateAssignUnit = () => [
+    check('unit_id').isInt().isEmpty().withMessage('unit_id must be an integer'),
+    validationResponse()
+]
+
 export const validateCreateUnit = () => [
     checkString('name', 3),
     validationResponse()
